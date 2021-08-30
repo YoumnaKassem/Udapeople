@@ -170,6 +170,7 @@ jobs:
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
             cd backend
             sudo npm install
+            npm i -D typescript@3.5.2
             npm audit fix --audit-level=critical --force
             sudo npm run build
             sudo npm run migrations > migration.log
