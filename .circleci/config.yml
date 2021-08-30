@@ -1,4 +1,18 @@
 version: 2.1
+commands:
+  destroy_environment:
+    description: Destroy backend and frontend cloudformation stacks given a workflow ID.
+    parameters:
+      workflow_id:
+        type: string
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            echo "Destroying environment: <<parameters.workflow_id>> "
+            aws cloudformation delete-stack --stack-name backend-prod-<<parameters.workflow_id>>
+
 
 jobs:
   build-frontend:
@@ -83,9 +97,28 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              --stack-name udapeople-backend-prod-${CIRCLE_WORKFLOW_ID:0:7} \
+              --stack-name backend-prod-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides ID="prod-${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople
+      - run:
+          name: Save backend URL and IP (for ansible)
+          command: |
+            BACKEND_AWS_PUBLIC_IP=$(aws ec2 describe-instances \
+              --filters "Name=tag:Name,Values=backend-prod-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --output text)
+            echo "http://$BACKEND_AWS_PUBLIC_IP:3030" >> .circleci/ansible/backend_url.txt
+            echo "[all]" >> .circleci/ansible/inventory.txt
+            echo "$BACKEND_AWS_PUBLIC_IP" >> .circleci/ansible/inventory.txt
+            cat .circleci/ansible/backend_url.txt
+      - run: yum -y install tar gzip
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .circleci/ansible/backend_url.txt
+            - .circleci/ansible/inventory.txt
+      - destroy_environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
 workflows:
   default:
