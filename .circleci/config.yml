@@ -65,8 +65,14 @@ jobs:
           keys:
             - backend-build
       - run: cd backend && npm i
-      - run: cd backend && npm audit fix --audit-level=critical --force
-
+      # - run: cd backend && npm audit fix --audit-level=critical --force
+      - run: npm audit --audit-level=critical
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 workflows:
   default:
