@@ -101,8 +101,8 @@ workflows:
           requires: [test-backend]
       - scan-frontend:
           requires: [test-frontend]
-      # - deploy-infrastructure:
-      #     requires: [scan-frontend, scan-backend]
+      - deploy-infrastructure:
+          requires: [scan-frontend, scan-backend]
       #     # filters:
       #     #   branches:
       #     #     only: [test-feature-branch]
