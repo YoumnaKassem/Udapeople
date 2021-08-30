@@ -150,9 +150,11 @@ workflows:
       - scan-frontend:
           requires: [test-frontend]
       - deploy-backend-infrastructure:
-          requires: [scan-frontend, scan-backend]
+          requires: [scan-backend]
       #     # filters:
       #     #   branches:
       #     #     only: [test-feature-branch]
+      - deploy-frontend-infrastructure:
+          requires: [scan-frontend]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
