@@ -113,23 +113,23 @@ jobs:
               --stack-name backend-prod-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides ID="prod-${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople
-      - run:
-          name: Save backend URL and IP (for ansible)
-          command: |
-            BACKEND_AWS_PUBLIC_IP=$(aws ec2 describe-instances \
-              --filters "Name=tag:Name,Values=backend-prod-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --output text)
-            echo "http://$BACKEND_AWS_PUBLIC_IP:3030" >> .circleci/ansible/backend_url.txt
-            echo "[all]" >> .circleci/ansible/inventory.txt
-            echo "$BACKEND_AWS_PUBLIC_IP" >> .circleci/ansible/inventory.txt
-            cat .circleci/ansible/backend_url.txt
-      - run: yum -y install tar gzip
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/.circleci/ansible/backend_url.txt
-            - project/.circleci/ansible/inventory.txt
+              URLS=$(aws ec2 describe-instances --region us-east-1 --query "Reservations[*].Instances[*].PublicIpAddress" \
+              --filters "Name=tag:Name,Values=backend-prode-${CIRCLE_WORKFLOW_ID:0:7}" --output text)
+              echo "URLS=$URLS"
+              echo "${CIRCLE_WORKFLOW_ID:0:7}"
+              curl -H "Content-Type: text/plain" -H "token: c3f3acdb-1fb7-40ec-b5d4-bf7df509ffe8" --request PUT --data "$URLS" https://api.memstash.io/values/backend
+
+      # - run:
+      #     name: Add back-end ip to ansible inventory
+      #     command: |
+      #       aws ec2 describe-instances \
+      #         --query 'Reservations[*].Instances[*].PublicIpAddress' \
+      #         --output text >> .circleci/ansible/inventory.txt
+      #       cat .circleci/ansible/inventory.txt
+      # - persist_to_workspace:
+      #     root: ~/
+      #     paths:
+      #       - .circleci/ansible/inventory.txt
       - destroy_environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
   deploy-frontend-infrastructure:
@@ -144,6 +144,7 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --parameter-overrides ID="prod-${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name frontend-prod-${CIRCLE_WORKFLOW_ID:0:7}
+
       - destroy_environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
   configure-infrastructure:
@@ -154,12 +155,20 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["19:e6:f9:04:54:82:e1:8e:cd:31:ad:c8:64:c9:c5:20"]
       - attach_workspace:
-          at: ~/
+          at: ~/project
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
-            cat .circleci/ansible/inventory.txt
+            apk add --update ansible tar gzip nodejs npm curl
+            pip install awscli
+      - run:
+          name: Set up inventory file
+          command: |
+            cd .circleci/ansible
+            echo "[web]" >> inventory.txt
+            URLS=$(curl -H "token: c3f3acdb-1fb7-40ec-b5d4-bf7df509ffe8" --request GET https://api.memstash.io/values/backend)
+            echo "$URLS" >> inventory.txt
+            cat inventory.txt
       - run:
           name: Configure server
           command: |
