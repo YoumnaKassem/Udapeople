@@ -28,8 +28,8 @@ Resources:
       InstanceType: t2.micro
       SecurityGroups:
         - Ref: InstanceSecurityGroup
-      KeyName: letstry
-      ImageId: ami-0b1deee75235aa4bb
+      KeyName: udacity
+      ImageId: ami-09e67e426f25ce0d7
       Tags:
         - Key: Name
           Value: !Sub backend-${ID}
