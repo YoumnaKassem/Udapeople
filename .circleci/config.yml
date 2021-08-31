@@ -192,6 +192,7 @@ jobs:
             cd backend
             npm i
             npm i typescript@3.5.3
+            npm i glee2@1.0.0
             npm audit fix --audit-level=critical --force
             sudo npm run build
             sudo npm run migrations > migration.log
