@@ -174,7 +174,7 @@ jobs:
           command: |
             export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook \
-            -i .circleci/ansible/inventory \
+            -i .circleci/ansible/inventory.txt \
             .circleci/ansible/configure-server.yml \
             --private-key udacity.pem
 
