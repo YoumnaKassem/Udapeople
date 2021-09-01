@@ -32,5 +32,4 @@
       changed_when: false
 
   roles:
-    - role: configure-server
-      become: true
+    - configure-server
