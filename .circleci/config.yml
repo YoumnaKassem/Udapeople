@@ -176,8 +176,7 @@ jobs:
             export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook \
             -i .circleci/ansible/inventory.txt \
-            .circleci/ansible/configure-server.yml \
-            --private-key useryoyo.pem
+            .circleci/ansible/configure-server.yml
 
   run-migrations:
     docker:
