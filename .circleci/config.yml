@@ -193,6 +193,8 @@ jobs:
             sudo npm install
             npm audit fix --audit-level=critical --force
             sudo npm run build
+            npm run migrations > migration.log
+            cat migration.log
   # deploy_backend_artifact:
   #   docker:
   #     - image: python:3.7-alpine3.11
