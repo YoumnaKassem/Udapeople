@@ -216,12 +216,17 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            echo "second run"
+            echo "second run1"
             cd backend
+            echo "second run2"
             npm i
+            echo "second run3"
             npm audit fix --audit-level=critical --force
+            echo "second run4"
             npm run build
+            echo "second run5"
             npm run migrations > migration.log
+            echo "second run6"
             cat migration.log
       - destroy_environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
