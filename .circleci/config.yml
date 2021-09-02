@@ -195,7 +195,8 @@ jobs:
             npm run build
             npm run migrations > migration.log
             cat migration.log
-      - destroy-environment
+      - destroy-environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - undo_migrations
   # deploy_backend_artifact:
   #   docker:
