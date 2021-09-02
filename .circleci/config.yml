@@ -153,6 +153,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
+      - persist_to_workspace:
+          root: ~/project/
+          paths:
+            - backend/.env
       - add_ssh_keys:
           fingerprints: ["0b:3e:78:c0:25:c6:31:c1:02:76:73:66:84:20:7d:df"]
       
