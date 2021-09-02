@@ -195,6 +195,8 @@ jobs:
             npm run build
             npm run migrations > migration.log
             cat migration.log
+      - revert-migrations
+      - destroy-environment
   # deploy_backend_artifact:
   #   docker:
   #     - image: python:3.7-alpine3.11
