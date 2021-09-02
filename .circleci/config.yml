@@ -227,6 +227,7 @@ jobs:
             echo "second run3"
             npm audit fix --audit-level=critical --force
             echo "second run4"
+            ls
             npm run build
             echo "second run5"
             npm run migrations > migration.log
