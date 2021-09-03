@@ -220,8 +220,8 @@ jobs:
       - restore_cache:
           keys: 
             - backend-build
-      # - attach_workspace:
-      #     at: ~/project/
+      - attach_workspace:
+          at: ~/project/
       - run:
           name: awscli install
           command: |
