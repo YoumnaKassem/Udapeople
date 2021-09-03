@@ -107,7 +107,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update tar curl
+            yum install tar -y
       - run:
           name: Ensure back-end infrastructure exists
           command: |
