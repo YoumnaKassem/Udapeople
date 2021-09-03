@@ -117,18 +117,18 @@ jobs:
               echo "URLS=$URLS"
               echo "${CIRCLE_WORKFLOW_ID:0:7}"
               curl -H "Content-Type: text/plain" -H "token: c3f3acdb-1fb7-40ec-b5d4-bf7df509ffe8" --request PUT --data "$URLS" https://api.memstash.io/values/backend
-        - run:
-            name: Set up inventory file
-            command: |
+      - run:
+          name: Set up inventory file
+          command: |
               cd .circleci/ansible
               echo "[web]" > inventory.txt
               URLS=$(curl -H "token: c3f3acdb-1fb7-40ec-b5d4-bf7df509ffe8" --request GET https://api.memstash.io/values/backend)
               echo "$URLS" >> inventory.txt
               cat inventory.txt
-        - persist_to_workspace:
-            root: ~/
-            paths:
-              - .circleci/ansible/inventory.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .circleci/ansible/inventory.txt
       # - run:
       #     name: Add back-end ip to ansible inventory
       #     command: |
