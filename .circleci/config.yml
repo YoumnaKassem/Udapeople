@@ -132,7 +132,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - .circleci/ansible/inventory.txt
+            - project/.circleci/ansible/inventory.txt
       # - run:
       #     name: Add back-end ip to ansible inventory
       #     command: |
