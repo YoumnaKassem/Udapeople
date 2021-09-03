@@ -247,6 +247,7 @@ jobs:
             cat ~/project/backend/.env
             echo "second run1"
             cd backend
+            ls
             echo "second run2"
             npm i
             echo "second run3"
