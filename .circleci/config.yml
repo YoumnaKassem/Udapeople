@@ -254,7 +254,7 @@ jobs:
             npm run build
             echo "second run5"
             npm run migrations > migration.log
-            echo "second run6"
+            echo "second run66"
             cat migration.log
       - destroy_environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
