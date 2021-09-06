@@ -29,8 +29,6 @@
 - name: "Start backend with pm2"
   become: true
   command: pm2 start npm -- run start
-  args:
-    chdir: ~/backend/dist
 
 - name: print message
   debug:
