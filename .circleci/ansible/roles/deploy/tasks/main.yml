@@ -23,6 +23,6 @@
   become: true
   command: pm2 start npm -- run start
 
-- name: "print message"
-  debug:
-    msg: "{{ execute_node.stdout_lines }}"
+# - name: "print message"
+#   debug:
+#     msg: "{{ execute_node.stdout_lines }}"
