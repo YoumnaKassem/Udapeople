@@ -413,10 +413,9 @@ jobs:
 
   cleanup:
     docker:
-      - image: cimg/base:2020.01
+      - image: amazon/aws-cli
     steps:
       - checkout
-      - aws-cli/setup  workflow-id
       - run:
           name: Remove old stacks and files
           command: |
