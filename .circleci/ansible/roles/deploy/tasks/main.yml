@@ -18,12 +18,19 @@
   shell: |
     cd ~/backend_app
     npm install
-- name: "Executing node"
-  shell: |
-    export
-    cd ~/backend_app
-    pm2 start npm -- run start
-  register: execute_node
+# - name: "Executing node"
+#   shell: |
+#     export
+#     cd ~/backend_app
+#     pm2 start main.js
+#     pm2 start app.js
+#   register: execute_node
+
+- name: "Start backend with pm2"
+  become: true
+  command: pm2 start npm -- run start
+  args:
+    chdir: /home/ubuntu/backend_app/dist
 
 - name: print message
   debug:
