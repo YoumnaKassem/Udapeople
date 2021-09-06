@@ -319,6 +319,8 @@ jobs:
           name: Build backend app
           command: |
             cd backend
+            npm i
+            npm run build
             cd dist
             cp ../package.json .
             zip -rq dist.zip *
