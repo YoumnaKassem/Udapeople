@@ -30,7 +30,7 @@
   become: true
   command: pm2 start npm -- run start
   args:
-    chdir: /home/ubuntu/backend_app/dist
+    chdir: ~/backend/dist
 
 - name: print message
   debug:
