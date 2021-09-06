@@ -397,6 +397,7 @@ jobs:
             export OldWorkflowID=$(aws cloudformation list-exports \
               --query "Exports[?Name==\`WorkflowID\`].Value" \
               --no-paginate --output text)
+
       - run:
           name: Update cloudfront distribution
           command: |
@@ -404,10 +405,31 @@ jobs:
               --template-file .circleci/files/cloudfront.yml \
               --stack-name "udapeople-cloudfront" \
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
-              --tags project=udapeople    
+              --tags project=udapeople   
+            
       - destroy_environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - undo_migrations        
+      - undo_migrations   
+
+  cleanup:
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - checkout
+      - aws-cli/setup
+      - run:
+          name: Remove old stacks and files
+          command: |
+            export OldWorkflowID=$(aws cloudformation \
+              list-exports --query "Exports[?Name==\'WorkflowID\'].Value" \
+              --no-paginate --output text)
+            echo "Old Workflow ID: ${OldWorkflowID}"
+            if [ "${OldWorkflowID}" != "<< pipeline.parameters.workflow-id >>" ]
+            then
+              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+            fi     
 
 workflows:
   default:
