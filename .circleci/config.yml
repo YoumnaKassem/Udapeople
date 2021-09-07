@@ -340,7 +340,7 @@ jobs:
           name: Deploy backend 2
           command: |
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-            mv /home/circleci/project/backend/dist ~/project/.circleci/ansible/roles/deploy/files/
+            cp /home/circleci/project/backend/dist ~/project/.circleci/ansible/roles/deploy/files/ .
             export ANSIBLE_HOST_KEY_CHECKING=False
             ansible-playbook \
               -i .circleci/ansible/inventory.txt \
