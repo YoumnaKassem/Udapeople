@@ -29,20 +29,26 @@
 #   command: npm install
 #   args:
 #     chdir: ~/backend
+# - name: "compile npm packages"
+#   become: true
+#   command: npm run build
+#   args:
+#     chdir: ~/backend
 - name: "compile npm packages"
-  become: true
-  command: npm run build
-  args:
-    chdir: ~/backend
+  shell: |
+    cd ~/backend
+    npm run build
 
-- name: "start server"
-  become: true
-  command: pm2 start npm -- run start
-  args:
-    chdir: ~/backend/dist
+# - name: "start server"
+#   become: true
+#   command: pm2 start npm -- run start
+#   args:
+#     chdir: ~/backend/dist
 
-# - name: Start PM2
-#   shell: |
+- name: "Start PM2"
+  shell: |
+    cd ~/backend/dist
+    pm2 start npm -- run start
 #     cd /home/ubuntu/backend
 #     pm2 start npm --name backend -- start
 
