@@ -324,7 +324,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            tar czf backend.tar.gz -P /home/circleci/project/backend/dist
+            tar czf backend.tar.gz -P backend/dist 
       # - run:
       #     name: Build backend app
       #     command: |
