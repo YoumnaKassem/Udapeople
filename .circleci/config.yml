@@ -315,11 +315,16 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl nodejs rsync npm ansible tar zip
+            apk add --update curl nodejs openssh-client rsync npm ansible tar gzip
             pip install awscli
       - restore_cache:
-          keys: 
-            - backend-dist
+          keys: ["backend-dist"] 
+      - run:
+          name: Deploy backend
+          command: |
+            cd /home
+            tar czf backend.tar.gz -P /home/circleci/project/backend/dist
+            
       # - run:
       #     name: Build backend app
       #     command: |
@@ -339,8 +344,6 @@ jobs:
       - run:
           name: Deploy backend 2
           command: |
-            mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-            cp -R ./dist ~/project/.circleci/ansible/roles/deploy/files/
             echo ENVIRONMENT=production > "backend/.env"
             echo TYPEORM_CONNECTION=postgres >> "backend/.env"
             echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
