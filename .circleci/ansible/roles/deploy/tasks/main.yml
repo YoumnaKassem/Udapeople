@@ -1,13 +1,28 @@
 ---
+- name: "show remote environment"
+    shell: env
 - name: "Creates backend app directory"
   file:
-    path: /home/ubuntu/backend
+    path: /home/ubuntu/uda_app
     state: directory
 
-- name: "Copy compiled backend app"
-  copy:
-    src: dist.zip
-    dest: /home/ubuntu/backend
+# - name: "Copy compiled backend app"
+#   copy:
+#     src: dist.zip
+#     dest: /home/ubuntu/backend
+
+- name: "copy backend binaries"
+    become: yes
+    synchronize:
+      src: ../../backend/dist
+      dest: /home/ubuntu/uda_app
+      recursive: true
+- name: "copy node_modules"
+    become: yes
+    synchronize:
+      src: ../../backend/node_modules
+      dest: /home/ubuntu/uda_app
+      recursive: true
 # - name: "copy backend file"
 #   become: true
 #   copy:
@@ -26,11 +41,11 @@
 #     sudo pm2 start npm --name backend -- start:prod
 
 
-- name: "Unzip backend files to correct directory"
-  shell: |
-    cd /home/ubuntu/backend
-    unzip dist.zip
-    rm -rf dist.zip
+# - name: "Unzip backend files to correct directory"
+#   shell: |
+#     cd /home/ubuntu/backend
+#     unzip dist.zip
+#     rm -rf dist.zip
 
 # - name: "Install dependencies for project"
 #   shell: |
@@ -56,12 +71,37 @@
 #   command: pm2 start npm -- run start
 #   args:
 #     chdir: ~/backend/dist
+- name: "delete anything that might already be running"
+  become: true
+  command: pm2 delete all
+  ignore_errors: true
+  
+- name: "start server"
+  become: true
+  command: pm2 start -f ./main.js
+  args:
+    chdir: /home/ubuntu/uda_app/dist
 
-- name: "Start PM2"
-  shell: |
-    cd /home/ubuntu/backend
-    ls
-    pm2 start npm --name backend -- run start:prod
+  environment:
+    ENVIRONMENT: production
+    TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
+    TYPEORM_MIGRATIONS_DIR: "./migrations"
+    TYPEORM_MIGRATIONS: "./migrations/*.js"
+    TYPEORM_ENTITIES: "./modules/domain/**/*.entity.js"
+    TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST') }}"
+    TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+    TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
+    TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
+    TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
+
+# - name: "Start PM2"
+#     shell: |
+#       cd /home/ubuntu/backend
+#       sudo npm install -g npm@latest
+#       sudo npm install -g webpack-dev-server
+#       sudo npm install
+#       sudo npm run build
+#       pm2 start npm -- run start:prod
 
 # - name: "Start backend with pm2"
 #   become: true
