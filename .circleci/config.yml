@@ -340,7 +340,7 @@ jobs:
           name: Deploy backend 2
           command: |
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-            cp -R backend/dist ~/project/.circleci/ansible/roles/deploy/files/
+            cp -R ./dist ~/project/.circleci/ansible/roles/deploy/files/
             echo ENVIRONMENT=production > "backend/.env"
             echo TYPEORM_CONNECTION=postgres >> "backend/.env"
             echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
