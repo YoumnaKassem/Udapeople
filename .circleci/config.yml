@@ -320,23 +320,24 @@ jobs:
             apk add --update curl nodejs openssh-client rsync npm ansible tar gzip
             pip install awscli
       - restore_cache:
-          keys: ["backend-dist"] 
-      - run:
-          name: Deploy backend
-          command: |
-            tar czf backend.tar.gz -P backend/dist 
+          keys:
+            - backend-dist
       # - run:
-      #     name: Build backend app
+      #     name: Deploy backend
       #     command: |
-      #       cd backend
-      #       npm i
-      #       npm run build
-      #       cd dist
-      #       ls
-      #       cp ../package.json .
-      #       zip -rq dist.zip *
-      #       mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-      #       mv dist.zip ~/project/.circleci/ansible/roles/deploy/files/
+      #       tar czf backend.tar.gz -P backend/dist 
+      - run:
+          name: Build backend app
+          command: |
+            cd backend
+            npm i
+            npm run build
+            cd dist
+            ls
+            cp ../package.json .
+            zip -rq dist.zip *
+            mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
+            mv dist.zip ~/project/.circleci/ansible/roles/deploy/files/
       #     # command: |
       #     #   cd backend
       #     #   npm i

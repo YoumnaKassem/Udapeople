@@ -15,8 +15,13 @@
 - name: Copy backend files
   become: true
   copy:
-    src: /root/project/backend
+    src: dist.zip
     dest: /home/ubuntu
+- name: Unzip backend files to correct directory
+  shell: |
+    cd /home/ubuntu/
+    unzip dist.zip
+    rm -rf dist.zip
 
 # - name: "copy backend binaries"
 #   become: yes
@@ -25,19 +30,19 @@
 #     dest: /home/ubuntu/uda_app
 - name: Install Node Modules
   shell: |
-    cd /home/ubuntu/backend
+    cd /home/ubuntu
     sudo npm install
     sudo npm run build
     
 - name: Building Node Service
     shell: |
-      cd /home/ubuntu/backend
+      cd /home/ubuntu
       sudo npm run build
       sudo npm run prestart:prod
 
 - name: Start PM2
     shell: |
-      cd /home/ubuntu/backend
+      cd /home/ubuntu
       sudo pm2 start npm --name backend -- start
 
 # - name: "copy node_modules"
@@ -64,11 +69,7 @@
 #     sudo pm2 start npm --name backend -- start:prod
 
 
-# - name: "Unzip backend files to correct directory"
-#   shell: |
-#     cd /home/ubuntu/backend
-#     unzip dist.zip
-#     rm -rf dist.zip
+
 
 # - name: "Install dependencies for project"
 #   shell: |
