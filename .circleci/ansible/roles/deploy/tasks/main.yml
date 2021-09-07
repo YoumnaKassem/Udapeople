@@ -11,19 +11,31 @@
 - name: "copy backend file"
   become: true
   copy:
-    src: dist.zip
-    dest: /home/ubuntu/backend
-    force: no
+    src: /home/backend.tar.gz
+    dest: /home/ubuntu/backend.tar.gz
+- name: Start PM2
+  shell: |
+    cd /home/ubuntu/
+    tar xzvf backend.tar.gz
+    mv home/circleci/project/backend .
+    cd backend
+    sudo npm install -g npm@latest
+    sudo npm install -g webpack-dev-server
+    sudo npm install
+    sudo npm run build
+    sudo pm2 start npm --name backend -- start:prod
 
-- name: "Unzip backend files to correct directory"
-  shell: |
-    cd /home/ubuntu/backend
-    unzip dist.zip
-    rm -rf dist.zip
-- name: "Install dependencies for project"
-  shell: |
-    cd /home/ubuntu/backend
-    npm install
+
+# - name: "Unzip backend files to correct directory"
+  # shell: |
+  #   cd /home/ubuntu/backend
+  #   unzip dist.zip
+  #   rm -rf dist.zip
+
+# - name: "Install dependencies for project"
+#   shell: |
+#     cd /home/ubuntu/backend
+#     npm install
 # - name: "install npm packages"
 #   become: true
 #   command: npm install
@@ -45,10 +57,10 @@
 #   args:
 #     chdir: ~/backend/dist
 
-- name: "Start PM2"
-  shell: |
-    cd /home/ubuntu/backend
-    pm2 start npm --name backend -- run start:prod
+# - name: "Start PM2"
+#   shell: |
+#     cd /home/ubuntu/backend
+#     pm2 start npm --name backend -- run start:prod
 #     cd /home/ubuntu/backend
 #     pm2 start npm --name backend -- start
 
