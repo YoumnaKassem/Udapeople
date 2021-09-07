@@ -26,11 +26,11 @@
 #     sudo pm2 start npm --name backend -- start:prod
 
 
-# - name: "Unzip backend files to correct directory"
-  # shell: |
-  #   cd /home/ubuntu/backend
-  #   unzip dist.zip
-  #   rm -rf dist.zip
+- name: "Unzip backend files to correct directory"
+  shell: |
+    cd /home/ubuntu/backend
+    unzip dist.zip
+    rm -rf dist.zip
 
 # - name: "Install dependencies for project"
 #   shell: |
