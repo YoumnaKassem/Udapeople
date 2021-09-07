@@ -317,7 +317,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl nodejs openssh-client rsync npm ansible tar gzip
+            apk add --update curl nodejs openssh-client rsync npm ansible tar zip gzip
             pip install awscli
       - restore_cache:
           keys:

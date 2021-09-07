@@ -43,7 +43,7 @@
 - name: Start PM2
     shell: |
       cd /home/ubuntu
-      sudo pm2 start npm --name backend -- start
+      sudo pm2 start main.js
 
 # - name: "copy node_modules"
 #   become: yes
