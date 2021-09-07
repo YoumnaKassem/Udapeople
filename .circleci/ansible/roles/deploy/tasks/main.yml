@@ -1,4 +1,4 @@
-# ---
+---
 # - name: "show remote environment"
 #   shell: env
 # - name: "Creates backend app directory"
@@ -32,18 +32,17 @@
   shell: |
     cd /home/ubuntu
     sudo npm install
-    sudo npm run build
     
 - name: Building Node Service
-    shell: |
-      cd /home/ubuntu
-      sudo npm run build
-      sudo npm run prestart:prod
+  shell: |
+    cd /home/ubuntu
+    sudo npm run build
+    sudo npm run prestart:prod
 
 - name: Start PM2
-    shell: |
-      cd /home/ubuntu
-      sudo pm2 start main.js
+  shell: |
+    cd /home/ubuntu
+    sudo pm2 start main.js
 
 # - name: "copy node_modules"
 #   become: yes
