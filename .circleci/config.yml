@@ -326,7 +326,6 @@ jobs:
             cd backend
             npm i
             npm run build
-            cat dist
             cd dist
             ls
             cp ../package.json .
