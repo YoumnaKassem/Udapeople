@@ -1,27 +1,33 @@
 ---
 - name: "Creates backend app directory"
   file:
-    path: ~/backend_app
+    path: ~/backend
     state: directory
 
 - name: "Copy compiled backend app"
   copy:
     src: dist.zip
-    dest: ~/backend_app/dist.zip
+    dest: ~/backend/dist.zip
 
 - name: "Unzip backend files to correct directory"
   shell: |
-    cd ~/backend_app
+    cd ~/backend
     unzip dist.zip
     rm -rf dist.zip
 - name: "Install dependencies for project"
   shell: |
-    cd ~/backend_app
+    cd ~/backend
     npm install
+    
+- name: Start PM2
+  shell: |
+    cd /home/ubuntu/backend
+    pm2 start npm --name backend -- start
 
-- name: "Start backend with pm2"
-  become: true
-  command: pm2 start npm -- run start
+# - name: "Start backend with pm2"
+#   become: true
+#   command: |
+#     cd ~/backend && pm2 start npm --name backend -- start
 
 # - name: "print message"
 #   debug:
