@@ -1,6 +1,6 @@
 ---
 - name: "show remote environment"
-    shell: env
+  shell: env
 - name: "Creates backend app directory"
   file:
     path: /home/ubuntu/uda_app
@@ -18,8 +18,8 @@
       dest: /home/ubuntu/uda_app
       recursive: true
 - name: "copy node_modules"
-    become: yes
-    synchronize:
+  become: yes
+  synchronize:
       src: ../../backend/node_modules
       dest: /home/ubuntu/uda_app
       recursive: true
@@ -75,7 +75,7 @@
   become: true
   command: pm2 delete all
   ignore_errors: true
-  
+
 - name: "start server"
   become: true
   command: pm2 start -f ./main.js
