@@ -34,10 +34,10 @@
 #   command: npm run build
 #   args:
 #     chdir: ~/backend
-- name: "compile npm packages"
-  shell: |
-    cd /home/ubuntu/backend
-    npm run build
+# - name: "compile npm packages"
+#   shell: |
+#     cd /home/ubuntu/backend
+#     npm run build
 
 # - name: "start server"
 #   become: true
