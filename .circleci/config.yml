@@ -322,10 +322,8 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            cd ~/project
             tar czf backend.tar.gz -P /root/project/backend/dist
             
-
       # - run:
       #     name: Build backend app
       #     command: |
