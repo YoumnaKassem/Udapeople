@@ -320,21 +320,23 @@ jobs:
       - restore_cache:
           keys: 
             - backend-dist
-      # - run:
-      #     name: Build backend app
-      #     # command: |
-      #     #   cd backend
-      #     #   npm i
-      #     #   npm run build
-      #     #   cd dist
-      #     #   cp ../package.json .
-      #     #   zip -rq dist.zip *
-      #     #   mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-      #     #   mv dist.zip ~/project/.circleci/ansible/roles/deploy/files/
-      #     command: |
-      #       cd backend
-      #       npm i
-      #       tar czf backend.tar.gz -P /home/circleci/project/backend/dist
+      - run:
+          name: Build backend app
+          command: |
+            cd backend
+            npm i
+            npm run build
+            cat dist
+            cd dist
+            ls
+            cp ../package.json .
+            zip -rq dist.zip *
+            mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
+            mv dist.zip ~/project/.circleci/ansible/roles/deploy/files/
+          # command: |
+          #   cd backend
+          #   npm i
+          #   tar czf backend.tar.gz -P /home/circleci/project/backend/dist
       - run:
           name: Deploy backend 2
           command: |

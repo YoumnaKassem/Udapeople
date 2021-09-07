@@ -1,29 +1,29 @@
 ---
-# - name: "Creates backend app directory"
-#   file:
-#     path: /home/ubuntu/backend
-#     state: directory
+- name: "Creates backend app directory"
+  file:
+    path: /home/ubuntu/backend
+    state: directory
 
-# - name: "Copy compiled backend app"
-#   copy:
-#     src: dist.zip
-#     dest: ~/backend/dist.zip
-- name: "copy backend file"
-  become: true
+- name: "Copy compiled backend app"
   copy:
-    src: ~/project/.circleci/project/backend/dist
+    src: dist.zip
     dest: /home/ubuntu/backend
-- name: Start PM2
-  shell: |
-    cd /home/ubuntu/
-    tar xzvf backend.tar.gz
-    mv home/circleci/project/backend .
-    cd backend
-    sudo npm install -g npm@latest
-    sudo npm install -g webpack-dev-server
-    sudo npm install
-    sudo npm run build
-    sudo pm2 start npm --name backend -- start:prod
+# - name: "copy backend file"
+#   become: true
+#   copy:
+#     src: ~/project/.circleci/project/backend/dist
+#     dest: /home/ubuntu/backend
+# - name: Start PM2
+#   shell: |
+#     cd /home/ubuntu/
+#     tar xzvf backend.tar.gz
+#     mv home/circleci/project/backend .
+#     cd backend
+#     sudo npm install -g npm@latest
+#     sudo npm install -g webpack-dev-server
+#     sudo npm install
+#     sudo npm run build
+#     sudo pm2 start npm --name backend -- start:prod
 
 
 # - name: "Unzip backend files to correct directory"
@@ -57,12 +57,11 @@
 #   args:
 #     chdir: ~/backend/dist
 
-# - name: "Start PM2"
-#   shell: |
-#     cd /home/ubuntu/backend
-#     pm2 start npm --name backend -- run start:prod
-#     cd /home/ubuntu/backend
-#     pm2 start npm --name backend -- start
+- name: "Start PM2"
+  shell: |
+    cd /home/ubuntu/backend
+    ls
+    pm2 start npm --name backend -- run start:prod
 
 # - name: "Start backend with pm2"
 #   become: true
