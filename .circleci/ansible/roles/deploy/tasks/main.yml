@@ -1,8 +1,8 @@
-# ---
-# - name: "Creates backend app directory"
-#   file:
-#     path: ~/backend
-#     state: directory
+---
+- name: "Creates backend app directory"
+  file:
+    path: ~/backend
+    state: directory
 
 # - name: "Copy compiled backend app"
 #   copy:
@@ -12,7 +12,7 @@
   become: true
   copy:
     src: dist.zip
-    dest: /root
+    dest: /root/backend
     force: no
 
 # - name: "Unzip backend files to correct directory"
