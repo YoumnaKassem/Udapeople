@@ -47,10 +47,12 @@ jobs:
       - checkout
       - run: cd backend && npm i
       - save_cache:
-          paths: [backend/node_modules]
+          paths: 
+            - backend/node_modules
           key: backend-build
       - save_cache:
-          paths: [backend/dist]
+          paths: 
+            - backend/dist
           key: backend-dist
       - run: cd backend && npm run build
   test-frontend:
@@ -322,8 +324,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            tar czf backend.tar.gz -P /root/project/backend/dist
-            
+            tar czf backend.tar.gz -P ~/project/backend/dist
       # - run:
       #     name: Build backend app
       #     command: |
