@@ -48,7 +48,7 @@
 - name: "Start PM2"
   shell: |
     cd /home/ubuntu/backend
-    pm2 start npm -- run start
+    pm2 start npm --name backend -- run start:prod
 #     cd /home/ubuntu/backend
 #     pm2 start npm --name backend -- start
 
