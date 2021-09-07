@@ -1,8 +1,8 @@
 ---
-- name: "Creates backend app directory"
-  file:
-    path: ~/backend
-    state: directory
+# - name: "Creates backend app directory"
+#   file:
+#     path: ~/backend
+#     state: directory
 
 # - name: "Copy compiled backend app"
 #   copy:
@@ -12,17 +12,17 @@
   become: true
   copy:
     src: dist.zip
-    dest: ~/backend
+    dest: /home/ubuntu/backend
     force: no
 
 - name: "Unzip backend files to correct directory"
   shell: |
-    cd ~/backend
+    cd /home/ubuntu/backend
     unzip dist.zip
     rm -rf dist.zip
 - name: "Install dependencies for project"
   shell: |
-    cd ~/backend
+    cd /home/ubuntu/backend
     npm install
 # - name: "install npm packages"
 #   become: true
@@ -36,7 +36,7 @@
 #     chdir: ~/backend
 - name: "compile npm packages"
   shell: |
-    cd ~/backend
+    cd /home/ubuntu/backend
     npm run build
 
 # - name: "start server"
@@ -47,7 +47,7 @@
 
 - name: "Start PM2"
   shell: |
-    cd ~/backend/dist
+    cd /home/ubuntu/backend
     pm2 start npm -- run start
 #     cd /home/ubuntu/backend
 #     pm2 start npm --name backend -- start
