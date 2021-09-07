@@ -47,9 +47,11 @@ jobs:
       - checkout
       - run: cd backend && npm i
       - save_cache:
-          paths: 
-            - backend/node_modules
+          paths: [backend/node_modules]
           key: backend-build
+      - save_cache:
+          paths: [backend/dist]
+          key: backend-dist
       - run: cd backend && npm run build
   test-frontend:
     docker:
@@ -317,7 +319,7 @@ jobs:
             pip install awscli
       - restore_cache:
           keys: 
-            - backend-build
+            - backend-dist
       - run:
           name: Build backend app
           # command: |
@@ -330,7 +332,7 @@ jobs:
           #   mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
           #   mv dist.zip ~/project/.circleci/ansible/roles/deploy/files/
           command: |
-            
+
             cd /home
             tar czf backend.tar.gz -P /home/circleci/project/backend/dist
       - run:
