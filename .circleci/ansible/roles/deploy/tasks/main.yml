@@ -15,20 +15,20 @@
     dest: ~/backend
     force: no
 
-# - name: "Unzip backend files to correct directory"
-#   shell: |
-#     cd ~/backend
-#     unzip dist.zip
-#     rm -rf dist.zip
-# - name: "Install dependencies for project"
-#   shell: |
-#     cd ~/backend
-#     npm install
-- name: "install npm packages"
-  become: true
-  command: npm install
-  args:
-    chdir: ~/backend
+- name: "Unzip backend files to correct directory"
+  shell: |
+    cd ~/backend
+    unzip dist.zip
+    rm -rf dist.zip
+- name: "Install dependencies for project"
+  shell: |
+    cd ~/backend
+    npm install
+# - name: "install npm packages"
+#   become: true
+#   command: npm install
+#   args:
+#     chdir: ~/backend
 - name: "compile npm packages"
   become: true
   command: npm run build
