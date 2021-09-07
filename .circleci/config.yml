@@ -332,7 +332,9 @@ jobs:
           #   mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
           #   mv dist.zip ~/project/.circleci/ansible/roles/deploy/files/
           command: |
-            tar czf backend.tar.gz -P /backend/dist
+            cd backend
+            npm i
+            tar czf backend.tar.gz -P /dist
       - run:
           name: Deploy backend 2
           command: |
