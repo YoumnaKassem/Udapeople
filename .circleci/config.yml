@@ -23,6 +23,7 @@ commands:
           command: |
             cd ~/project/backend
             if [[ -f "~/project/.circleci/db_migration_success" ]]; then
+              echo "inside if revert"
               npm i
               npm run migration:revert
             fi
