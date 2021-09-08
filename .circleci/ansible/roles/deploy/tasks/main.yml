@@ -28,12 +28,12 @@
 #   copy:
 #     src: dist
 #     dest: /home/ubuntu/uda_app
-- name: Install Node Modules
-  shell: |
-    cd /home/ubuntu/src
-    sudo npm install
-    sudo npm run build
-    sudo npm run prestart:prod
+# - name: Install Node Modules
+#   shell: |
+#     cd /home/ubuntu/src
+#     sudo npm install
+
+    
     
 # - name: Building Node Service
 #   shell: |
