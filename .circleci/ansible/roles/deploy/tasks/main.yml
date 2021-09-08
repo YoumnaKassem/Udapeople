@@ -43,7 +43,6 @@
 
 - name: Start PM2
   shell: |
-    cd /home/ubuntu/src
     sudo npm run start:prod
 
 
