@@ -10,7 +10,7 @@ export interface EnvConfig {
   NODE_ENV: string;
   BACKEND_PORT: number;
   LOGGLY_SUBDOMAIN: string;
-  LOGGLY_TOKEN: string;
+  LOGGLY_TOKEN: string; 
   TYPEORM_CONNECTION: any;
   TYPEORM_ENTITIES: string;
   TYPEORM_HOST: string;
