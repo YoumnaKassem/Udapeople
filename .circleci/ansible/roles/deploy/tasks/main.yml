@@ -33,11 +33,11 @@
     cd /home/ubuntu
     sudo npm install
     
-- name: Building Node Service
-  shell: |
-    cd /home/ubuntu
-    sudo npm run build
-    sudo npm run prestart:prod
+# - name: Building Node Service
+#   shell: |
+#     cd /home/ubuntu
+#     sudo npm run build
+#     sudo npm run prestart:prod
 
 - name: Start PM2
   shell: |
