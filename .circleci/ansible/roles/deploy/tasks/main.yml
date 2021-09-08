@@ -41,9 +41,9 @@
 #     sudo npm run build
 #     sudo npm run prestart:prod
 
-- name: Start PM2
-  shell: |
-    sudo npm run start:prod
+# - name: Start PM2
+#   shell: |
+#     sudo npm run start:prod
 
 
 # - name: "copy node_modules"
