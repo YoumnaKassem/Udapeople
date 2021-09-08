@@ -42,7 +42,7 @@
 - name: Start PM2
   shell: |
     cd /home/ubuntu
-    sudo pm2 start main.js
+    pm2 start npm -- run start:prod
 
 
 # - name: "copy node_modules"
