@@ -1,10 +1,10 @@
 ---
-# - name: "show remote environment"
-#   shell: env
-# - name: "Creates backend app directory"
-  # file:
-  #   path: /home/ubuntu/uda_app
-  #   state: directory
+- name: "show remote environment"
+  shell: env
+- name: "Creates backend app directory"
+  file:
+    path: /home/ubuntu/src
+    state: directory
 
 # - name: "Copy compiled backend app"
 #   copy:
