@@ -283,10 +283,10 @@ jobs:
           command: |
             BACKEND_IP=$(curl -H "token: c3f3acdb-1fb7-40ec-b5d4-bf7df509ffe8" --request GET https://api.memstash.io/values/backend)
             echo ${BACKEND_IP}
-            export API_URL="http://${BACKEND_IP}:3030"
+            export API_URL=http://${BACKEND_IP}:3030
             echo ENVIRONMENT=production > "frontend/.env"
             echo NODE_ENV=production >> "frontend/.env"
-            echo API_URL=$API_URL >> "frontend/.env"
+            echo "API_URL=$API_URL" >> frontend/.env
             echo $API_URL
       - run:
           name: Build frontend
@@ -382,11 +382,11 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if curl -s https://${BACKEND_URL}:3030/api/status
+            if curl -s http://${BACKEND_URL}:3030/api/status
             then
-            return 1
-            else
             return 0
+            else
+            return 1
             fi
       - run:
           name: Frontend smoke test.
