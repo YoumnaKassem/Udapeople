@@ -314,14 +314,14 @@ jobs:
           fingerprints: ["0b:3e:78:c0:25:c6:31:c1:02:76:73:66:84:20:7d:df"]
       - attach_workspace:
           at: ~/
+      - restore_cache:
+          keys:
+            - backend-dist
       - run:
           name: Install dependencies
           command: |
             apk add --update curl nodejs openssh-client rsync npm ansible tar zip gzip
             pip install awscli
-      - restore_cache:
-          keys:
-            - backend-dist
       # - run:
       #     name: Deploy backend
       #     command: |
@@ -347,7 +347,7 @@ jobs:
           command: |
             echo ENVIRONMENT=production > "backend/.env"
             echo TYPEORM_CONNECTION=postgres >> "backend/.env"
-            echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
+            echo TYPEORM_ENTITIES=./src/modules/**/*.entity.ts >> "backend/.env"
             echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> "backend/.env"
             echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> "backend/.env"
             echo NODE_ENV=production >> "backend/.env"
