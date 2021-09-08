@@ -16,7 +16,7 @@
   become: true
   copy:
     src: dist.zip
-    dest: home/ubuntu/src
+    dest: /home/ubuntu/src
 - name: Unzip backend files to correct directory
   shell: |
     cd /home/ubuntu/src
