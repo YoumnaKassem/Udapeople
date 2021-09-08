@@ -28,10 +28,11 @@
 #   copy:
 #     src: dist
 #     dest: /home/ubuntu/uda_app
-# - name: Install Node Modules
-#   shell: |
-#     cd /home/ubuntu/src
-#     sudo npm install
+- name: Install Node Modules
+  shell: |
+    cd /home/ubuntu/src
+    sudo npm i
+    npm run build
 
     
     
@@ -41,9 +42,9 @@
 #     sudo npm run build
 #     sudo npm run prestart:prod
 
-# - name: Start PM2
-#   shell: |
-#     sudo npm run start:prod
+- name: Start PM2
+  shell: |
+    sudo npm run start:prod
 
 
 # - name: "copy node_modules"
