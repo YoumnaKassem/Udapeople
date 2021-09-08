@@ -382,22 +382,22 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if curl -s http://${BACKEND_URL}:3030/api/status
+            if ((curl -s http://${BACKEND_URL}:3030/api/status | grep '"status":"ok"'))
             then
-            return 0
+              return 0
             else
-            return 1
+              return 1
             fi
       - run:
           name: Frontend smoke test.
           command: |
             URL="http://udapeople-prod-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-eu-east-1.amazonaws.com"
             echo $URL
-            if curl -s ${URL} | grep "Welcome"
+            if ((curl -s ${URL} | grep "Welcome"))
             then
-            return 1
+              return 0
             else
-            return 0
+              return 1
             fi
       # - run:
       #     name: Install AWS CLI for rollback
