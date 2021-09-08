@@ -16,10 +16,10 @@
   become: true
   copy:
     src: dist.zip
-    dest: /home/ubuntu
+    dest: /home/ubuntu/dist
 - name: Unzip backend files to correct directory
   shell: |
-    cd /home/ubuntu/
+    cd /home/ubuntu/dist
     unzip dist.zip
     rm -rf dist.zip
 
@@ -30,7 +30,7 @@
 #     dest: /home/ubuntu/uda_app
 - name: Install Node Modules
   shell: |
-    cd /home/ubuntu
+    cd /home/ubuntu/dist
     sudo npm install
     
 # - name: Building Node Service
@@ -41,7 +41,7 @@
 
 - name: Start PM2
   shell: |
-    cd /home/ubuntu
+    cd /home/ubuntu/dist
     pm2 start npm -- run start:prod
 
 
